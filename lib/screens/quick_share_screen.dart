@@ -9,7 +9,6 @@ import '../widgets/quick_share_tabs.dart';
 import '../widgets/post_card.dart';
 import '../widgets/caption_section.dart';
 import '../widgets/social_share_row.dart';
-import '../widgets/quick_share_bottom_nav.dart';
 import '../widgets/smart_post_loading_view.dart';
 
 class QuickShareScreen extends StatefulWidget {
@@ -24,9 +23,7 @@ class _QuickShareScreenState extends State<QuickShareScreen> {
   int _activePage = 0;
   int _activeTab = 0;
 
-  // Loading state (Content 18-20 / 22-24): a checklist that fills in before
-  // the actual Smart Post feed is revealed. Kept on the same screen/route so
-  // this stays a genuine single-page UI rather than a separate loading route.
+
   final List<bool> _completedSteps =
       List.filled(SmartPostLoadingView.stepLabels.length, false);
   bool _isLoadingContent = true;
@@ -75,9 +72,7 @@ class _QuickShareScreenState extends State<QuickShareScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Simple responsive clamp: the design is mobile-first (375 reference
-    // width); on wider screens (tablet/web/desktop) we center the content
-    // in a fixed-width column instead of letting it stretch edge to edge.
+
     final screenWidth = MediaQuery.of(context).size.width;
     final contentWidth = screenWidth > AppBreakpoints.tablet
         ? AppBreakpoints.mobileReference + 60
@@ -130,7 +125,6 @@ class _QuickShareScreenState extends State<QuickShareScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const QuickShareBottomNav(),
     );
   }
 }

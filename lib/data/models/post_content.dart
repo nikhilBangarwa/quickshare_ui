@@ -1,5 +1,4 @@
-/// Represents a single "smart post" card the user can browse and share.
-/// Mirrors the repeating "Content 10 / 11 / 21..." frames in the Figma file.
+
 class PostContent {
   final String id;
   final String imageUrl;

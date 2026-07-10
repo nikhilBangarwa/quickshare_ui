@@ -5,51 +5,112 @@ import '../core/theme/app_text_styles.dart';
 import 'share_progress_overlay.dart';
 
 class _SocialTarget {
-  final IconData icon;
+  final Widget iconWidget;
+  final String label;
   final Color? color;
   final Gradient? gradient;
-  final String label;
 
   const _SocialTarget({
-    required this.icon,
+    required this.iconWidget,
     required this.label,
     this.color,
     this.gradient,
   });
 }
 
-/// Row of quick-share destinations. Tapping a circle triggers the
-/// [ShareProgressOverlay] simulation — wiring real share intents is out of
-/// scope per the assignment brief (UI-focused, hardcoded values, no
-/// backend/API work).
 class SocialShareRow extends StatelessWidget {
   const SocialShareRow({super.key});
 
   static final List<_SocialTarget> _targets = [
     _SocialTarget(
-      icon: Icons.camera_alt_rounded,
       label: 'Instagram',
       gradient: const LinearGradient(colors: AppColors.socialGradientInstagram),
+      iconWidget: Center(
+        child: Container(
+          width: 22,
+          height: 22,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 2.0),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 9,
+                height: 9,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2.0),
+                ),
+              ),
+              Positioned(
+                top: 1.5,
+                right: 1.5,
+                child: Container(
+                  width: 2.0,
+                  height: 2.0,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     ),
-    _SocialTarget(
-      icon: Icons.facebook_rounded,
+    const _SocialTarget(
+      iconWidget: Icon(Icons.facebook_rounded, color: Colors.white, size: 24),
       label: 'Facebook',
       color: AppColors.facebookBlue,
     ),
-    _SocialTarget(
-      icon: Icons.send_rounded,
+    const _SocialTarget(
+      iconWidget: Icon(Icons.send_rounded, color: Colors.white, size: 22),
       label: 'Messenger',
       color: AppColors.messengerBlue,
     ),
     _SocialTarget(
-      icon: Icons.chat_bubble_rounded,
       label: 'WhatsApp',
       color: AppColors.whatsappGreen,
+      iconWidget: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 24),
+            Container(
+              margin: const EdgeInsets.only(bottom: 2, right: 1),
+              child: const Icon(Icons.phone, color: AppColors.whatsappGreen, size: 12),
+            ),
+          ],
+        ),
+      ),
     ),
     _SocialTarget(
-      icon: Icons.push_pin_rounded,
       label: 'Pinterest',
       color: AppColors.pinterestRed,
+      iconWidget: Center(
+        child: Container(
+          width: 24,
+          height: 24,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+          ),
+          child: const Center(
+            child: Text(
+              'p',
+              style: TextStyle(
+                color: AppColors.pinterestRed,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+                fontFamily: 'serif',
+              ),
+            ),
+          ),
+        ),
+      ),
     ),
   ];
 
@@ -79,23 +140,19 @@ class _SocialCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          onTap: () => ShareProgressOverlay.show(context, target.label),
-          child: Container(
-            width: 46,
-            height: 46,
-            decoration: BoxDecoration(
-              color: target.color,
-              gradient: target.gradient,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(target.icon, color: Colors.white, size: 22),
-          ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      onTap: () => ShareProgressOverlay.show(context, target.label),
+      child: Container(
+        width: 46,
+        height: 46,
+        decoration: BoxDecoration(
+          color: target.color,
+          gradient: target.gradient,
+          shape: BoxShape.circle,
         ),
-      ],
+        child: target.iconWidget,
+      ),
     );
   }
 }

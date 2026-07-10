@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
-import 'screens/quick_share_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const QuickShareApp());
@@ -12,10 +12,10 @@ class QuickShareApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Oriflame Quick Share',
+      title: 'Quick Share',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const QuickShareScreen(),
+      home: const SplashScreen(),
     );
   }
 }

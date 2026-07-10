@@ -3,11 +3,8 @@ import '../core/constants/app_constants.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 
-/// Matches the "Content 4 / Content 5" wireframe frames: after the user taps
-/// a quick-share platform, a small card walks through a few prep steps with
-/// an animated progress bar, then hands off to a platform confirmation
-/// screen before auto-dismissing. No real network/share intent is fired —
-/// this is a UI-only simulation per the assignment's "hardcoded values" note.
+/// Renders a simulated share progress dialog that walks through four stages
+/// and transitions to a dynamic, brand-faithful opening screen for the social target.
 class ShareProgressOverlay extends StatefulWidget {
   final String platformLabel;
 
@@ -76,10 +73,10 @@ class _ShareProgressOverlayState extends State<ShareProgressOverlay>
         child: _showHandoff
             ? _HandoffCard(platformLabel: widget.platformLabel)
             : _ProgressCard(
-          key: ValueKey(_stepIndex),
-          label: _steps[_stepIndex],
-          controller: _controller,
-        ),
+                key: ValueKey(_stepIndex),
+                label: _steps[_stepIndex],
+                controller: _controller,
+              ),
       ),
     );
   }
@@ -137,6 +134,109 @@ class _HandoffCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget iconWidget;
+    Color? color;
+    Gradient? gradient;
+    String subtitle;
+
+    switch (platformLabel.toLowerCase()) {
+      case 'instagram':
+        gradient = const LinearGradient(colors: AppColors.socialGradientInstagram);
+        subtitle = 'from Meta';
+        // Clean vector drawing matching the real Instagram camera outline logo
+        iconWidget = Center(
+          child: Container(
+            width: 25,
+            height: 25,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 2.2),
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2.2),
+                  ),
+                ),
+                Positioned(
+                  top: 1.5,
+                  right: 1.5,
+                  child: Container(
+                    width: 2.5,
+                    height: 2.5,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+        break;
+      case 'facebook':
+        iconWidget = const Icon(Icons.facebook_rounded, color: Colors.white, size: 30);
+        color = AppColors.facebookBlue;
+        subtitle = 'from Meta';
+        break;
+      case 'messenger':
+        iconWidget = const Icon(Icons.send_rounded, color: Colors.white, size: 26);
+        color = AppColors.messengerBlue;
+        subtitle = 'from Meta';
+        break;
+      case 'whatsapp':
+        color = AppColors.whatsappGreen;
+        subtitle = 'from Meta';
+        iconWidget = Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              const Icon(Icons.chat_bubble_rounded, color: Colors.white, size: 28),
+              Container(
+                margin: const EdgeInsets.only(bottom: 3, right: 1),
+                child: const Icon(Icons.phone, color: AppColors.whatsappGreen, size: 14),
+              ),
+            ],
+          ),
+        );
+        break;
+      case 'pinterest':
+        color = AppColors.pinterestRed;
+        subtitle = 'from Pinterest';
+        iconWidget = Center(
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Center(
+              child: Text(
+                'p',
+                style: TextStyle(
+                  color: AppColors.pinterestRed,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'serif',
+                ),
+              ),
+            ),
+          ),
+        );
+        break;
+      default:
+        iconWidget = const Icon(Icons.share_rounded, color: Colors.white, size: 26);
+        color = AppColors.primaryGreen;
+        subtitle = '';
+    }
+
     return _Card(
       key: const ValueKey('handoff'),
       child: Column(
@@ -147,17 +247,17 @@ class _HandoffCard extends StatelessWidget {
             height: 56,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppRadius.md),
-              gradient: const LinearGradient(
-                colors: AppColors.socialGradientInstagram,
-              ),
+              color: color,
+              gradient: gradient,
             ),
-            child: const Icon(Icons.camera_alt_rounded,
-                color: Colors.white, size: 26),
+            child: iconWidget,
           ),
           const SizedBox(height: AppSpacing.md),
           Text('Opening $platformLabel...', style: AppTextStyles.sheetTitle),
-          const SizedBox(height: AppSpacing.xs),
-          Text('from Meta', style: AppTextStyles.navLabel),
+          if (subtitle.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text(subtitle, style: AppTextStyles.navLabel),
+          ],
         ],
       ),
     );
@@ -179,7 +279,7 @@ class _Card extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.lg),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 24,
             offset: const Offset(0, 8),
           ),

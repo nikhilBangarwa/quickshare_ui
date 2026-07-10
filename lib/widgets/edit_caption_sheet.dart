@@ -56,6 +56,35 @@ class _EditCaptionSheetState extends State<EditCaptionSheet> {
     });
   }
 
+  Widget _buildRichText(String text) {
+    final List<TextSpan> spans = [];
+    final RegExp regExp = RegExp(r'(\s+)');
+    final List<String> parts = text.split(regExp);
+
+    for (final part in parts) {
+      if (part.startsWith('#')) {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.captionHashtag,
+        ));
+      } else if (part.startsWith('http://') || part.startsWith('https://')) {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.editCaptionLink.copyWith(fontSize: 13),
+        ));
+      } else {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.caption,
+        ));
+      }
+    }
+
+    return Text.rich(
+      TextSpan(children: spans),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
@@ -95,8 +124,7 @@ class _EditCaptionSheetState extends State<EditCaptionSheet> {
                         behavior: HitTestBehavior.opaque,
                         onTap: _enterEditMode,
                         child: SingleChildScrollView(
-                          child: Text(_controller.text,
-                              style: AppTextStyles.caption),
+                          child: _buildRichText(_controller.text),
                         ),
                       ),
               ),

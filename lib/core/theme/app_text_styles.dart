@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
-/// Centralized text styles so widgets never hardcode font sizes/weights.
 class AppTextStyles {
   AppTextStyles._();
 

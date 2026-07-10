@@ -56,10 +56,16 @@ class _PostCardState extends State<PostCard> {
                       ),
                     );
                   },
-                  errorBuilder: (context, error, stack) => Container(
-                    color: AppColors.divider,
-                    child: const Icon(Icons.image_not_supported_outlined,
-                        color: AppColors.iconInactive),
+                  errorBuilder: (context, error, stack) => Image.asset(
+                    'assets/${post.id}.png',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stack) => Container(
+                      color: AppColors.divider,
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported_outlined,
+                            color: AppColors.iconInactive),
+                      ),
+                    ),
                   ),
                 );
               },

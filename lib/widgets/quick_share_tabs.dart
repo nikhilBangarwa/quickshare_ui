@@ -25,7 +25,7 @@ class QuickShareTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 48,
       decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
@@ -46,7 +46,7 @@ class QuickShareTabs extends StatelessWidget {
                         ? AppTextStyles.tabActive
                         : AppTextStyles.tabInactive,
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 4),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     height: 2,

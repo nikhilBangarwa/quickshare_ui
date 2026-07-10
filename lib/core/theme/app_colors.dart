@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Colors picked/approximated from the Oriflame "Quick Share" Figma wireframe.
-/// See README.md -> "Design decisions" for notes on where values were
-/// approximated because the wireframe screenshots didn't expose exact hex codes.
 class AppColors {
   AppColors._();
 
@@ -32,5 +29,6 @@ class AppColors {
   static const Color facebookBlue = Color(0xFF1877F2);
   static const Color messengerBlue = Color(0xFF2AABEE);
   static const Color whatsappGreen = Color(0xFF25D366);
+  static const Color telegramBlue = Color(0xFF229ED9);
   static const Color pinterestRed = Color(0xFFE60023);
 }

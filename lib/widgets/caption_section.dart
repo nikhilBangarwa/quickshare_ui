@@ -4,10 +4,7 @@ import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import 'edit_caption_sheet.dart';
 
-/// Caption preview shown under the post card. Tapping it (or the
-/// "Edit Caption" link) opens the Edit Caption bottom sheet in read-only
-/// mode first — tapping the text again inside the sheet reveals the
-/// keyboard, matching the two-step interaction called out in the wireframe.
+
 class CaptionSection extends StatelessWidget {
   final String caption;
   final ValueChanged<String> onCaptionSaved;
@@ -28,6 +25,37 @@ class CaptionSection extends StatelessWidget {
     if (result != null) onCaptionSaved(result);
   }
 
+  Widget _buildRichCaption(String text) {
+    final List<TextSpan> spans = [];
+    final RegExp regExp = RegExp(r'(\s+)');
+    final List<String> parts = text.split(regExp);
+
+    for (final part in parts) {
+      if (part.startsWith('#')) {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.captionHashtag,
+        ));
+      } else if (part.startsWith('http://') || part.startsWith('https://')) {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.editCaptionLink.copyWith(fontSize: 13),
+        ));
+      } else {
+        spans.add(TextSpan(
+          text: part,
+          style: AppTextStyles.caption,
+        ));
+      }
+    }
+
+    return Text.rich(
+      TextSpan(children: spans),
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,12 +66,7 @@ class CaptionSection extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () => _openEditSheet(context),
-            child: Text(
-              caption,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption,
-            ),
+            child: _buildRichCaption(caption),
           ),
           const SizedBox(height: AppSpacing.xs),
           GestureDetector(

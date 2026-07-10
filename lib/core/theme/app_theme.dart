@@ -11,7 +11,7 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.primaryGreen,
         primary: AppColors.primaryGreen,
-        background: AppColors.background,
+        surface: AppColors.background,
       ),
       splashFactory: InkRipple.splashFactory,
       dividerColor: AppColors.divider,

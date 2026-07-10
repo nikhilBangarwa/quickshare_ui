@@ -1,7 +1,6 @@
 import 'models/post_content.dart';
 
-/// Hardcoded content — the brief explicitly asks to avoid backend/API work
-/// and demo the UI with static values.
+
 class DummyData {
   DummyData._();
 
@@ -14,12 +13,13 @@ class DummyData {
       authorSubtitle: 'High converting in Oriflame Community',
       badgeLabel: 'Ready to share',
       caption:
-          '💋 Keep your lips soft, plump, and perfectly hydrated all day! '
-          'Our Hyaluronic Lip Balm is infused with natural moisture-locking '
-          'ingredients that smooth, protect, and give you that irresistible '
-          'shine. ✨🔥 #HydratedLips #OriflameGlow #ShopNow\n\n'
-          'Buy my referral link: https://oriflame.com/lipbalm/ABCDE123\n'
-          'Use my referral code: ABCDE123',
+          '💧 Keep your lips soft, plump, and perfectly hydrated all day! '
+          'Our Hyaluronic Lip Balm is infused with moisture-locking ingredients '
+          'to nourish, smooth, and add a natural, glossy finish. Say goodbye to '
+          'dryness and hello to a luscious, healthy pout! 💋✨ #HydratedLips '
+          '#PlumpAndGlow #LipCare\n\n'
+          'Use my referral link: https://www.oriflame.com/lipbalm/amanda10390\n'
+          'Use my referral code: AMAOR3203',
     ),
     PostContent(
       id: 'content_11',
