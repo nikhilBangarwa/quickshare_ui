@@ -17,7 +17,7 @@ Follow these instructions to set up and run the project locally.
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/nikhilBangarwa/quickshare_ui>
    cd quickshare_ui
    ```
 
